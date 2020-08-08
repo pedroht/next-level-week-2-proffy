@@ -13,9 +13,7 @@ function ForgotPassword() {
   async function handleForgotPassword(e: FormEvent) {
     e.preventDefault();
 
-    alert("Enviamos um email!");
-
-    history.push("/");
+    history.push("/status");
   }
 
   return (

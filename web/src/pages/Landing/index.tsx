@@ -6,6 +6,7 @@ import landingImg from "../../assets/images/landing.svg";
 import studyIcon from "../../assets/images/icons/study.svg";
 import giveClassesIcon from "../../assets/images/icons/give-classes.svg";
 import purpleHeartIcon from "../../assets/images/icons/purple-heart.svg";
+import warningIcon from "../../assets/images/icons/warning.svg";
 
 import api from "../../services/api";
 
@@ -27,33 +28,57 @@ function Landing() {
   return (
     <div id="page-landing">
       <div id="page-landing-content" className="container">
-        <div className="logo-container">
-          <img src={logoImg} alt="Logo Proffy" />
-          <h2>Sua plataforma de estudos online.</h2>
-        </div>
-
-        <img
-          src={landingImg}
-          alt="Plataforma de estudos"
-          className="hero-image"
-        />
-
-        <div className="buttons-container">
-          <Link to="/study" className="study">
-            <img src={studyIcon} alt="Estudar" />
-            Estudar
-          </Link>
-
-          <Link to="/give-classes" className="give-classes">
-            <img src={giveClassesIcon} alt="Dar aulas" />
-            Dar aulas
+        <div className="user-actions">
+          <div>
+            <img
+              src="https://avatars2.githubusercontent.com/u/2254731?v=4"
+              alt="Pedro Henrique"
+            />
+            <Link to="/user">Pedro Henrique</Link>
+          </div>
+          <Link to="/logout">
+            <img src={warningIcon} alt="Logout" />
           </Link>
         </div>
 
-        <span className="total-connections">
-          Total de {totalConnections} conexões já realizadas{" "}
-          <img src={purpleHeartIcon} alt="Coração roxo" />
-        </span>
+        <div className="banner">
+          <div className="logo-container">
+            <img src={logoImg} alt="Logo Proffy" />
+            <h2>Sua plataforma de estudos online.</h2>
+          </div>
+
+          <img
+            src={landingImg}
+            alt="Plataforma de estudos"
+            className="hero-image"
+          />
+        </div>
+
+        <div className="actions">
+          <div className="welcome">
+            <p>
+              Seja bem-vindo
+              <span>O que deseja fazer?</span>
+            </p>
+
+            <span className="total-connections">
+              Total de {totalConnections} conexões já realizadas{" "}
+              <img src={purpleHeartIcon} alt="Coração roxo" />
+            </span>
+          </div>
+
+          <div className="buttons-container">
+            <Link to="/study" className="study">
+              <img src={studyIcon} alt="Estudar" />
+              Estudar
+            </Link>
+
+            <Link to="/give-classes" className="give-classes">
+              <img src={giveClassesIcon} alt="Dar aulas" />
+              Dar aulas
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
