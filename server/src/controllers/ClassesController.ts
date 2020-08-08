@@ -18,9 +18,11 @@ export default class ClassesController {
     const time = filters.time as string;
 
     if (!week_day || !subject || !time) {
-      return response.status(400).json({
-        error: "Missing filters to search classes",
-      });
+      return response
+        .json({
+          error: "Missing filters to search classes",
+        })
+        .status(400);
     }
 
     const timeInMinutes = convertHourToMinutes(time);
@@ -41,7 +43,7 @@ export default class ClassesController {
 
       return res.json(classes);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
   }
 
@@ -85,7 +87,7 @@ export default class ClassesController {
     } catch (error) {
       await trx.rollback();
 
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
 
     return res.json();

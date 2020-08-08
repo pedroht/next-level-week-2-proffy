@@ -14,7 +14,7 @@ export default class UsersController {
 
       return res.status(200).json({ user });
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
   }
 
@@ -37,12 +37,14 @@ export default class UsersController {
         return res.sendStatus(201);
       }
 
-      return res.status(400).json({ error: "Usuário já existe!" });
+      return res.json({ error: "Usuário já existe!" }).status(400);
     } catch (error) {
-      return res.status(400).json({
-        error: "Usuário não pode ser registrado",
-        message: error.message,
-      });
+      return res
+        .json({
+          error: "Usuário não pode ser registrado",
+          message: error.message,
+        })
+        .status(400);
     }
   }
 
@@ -61,8 +63,8 @@ export default class UsersController {
 
           if (user[0]) {
             return res
-              .status(400)
-              .json({ error: "Este email já está em uso " });
+              .json({ error: "Este email já está em uso " })
+              .status(400);
           }
         }
 
@@ -71,9 +73,9 @@ export default class UsersController {
         return res.sendStatus(200);
       }
 
-      return res.status(400).json({ error: "Usuário Não autorizado" });
+      return res.json({ error: "Usuário Não autorizado" }).status(400);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
   }
 }

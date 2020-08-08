@@ -12,13 +12,13 @@ export default class UsersController {
       const user = await db("users").where("email", "=", email);
 
       if (!user[0]) {
-        return res.status(400).json({ error: "Usuário não encontrado" });
+        return res.json({ error: "Usuário não encontrado" }).status(400);
       }
 
       const compareHash = await bcrypt.compare(password, user[0].password);
 
       if (!compareHash) {
-        return res.status(400).json({ error: "Senha incorreta" });
+        return res.json({ error: "Senha incorreta" }).status(400);
       }
 
       return res.status(200).json({
@@ -26,15 +26,17 @@ export default class UsersController {
         token: jwt.sign({ id: user[0].id }, "secret", { expiresIn: 2400 }),
       });
     } catch (error) {
-      return res.status(400).json({
-        error: "Autenticação do usuário falhou",
-      });
+      return res
+        .json({
+          error: "Autenticação do usuário falhou",
+        })
+        .status(400);
     }
   }
 
   async logout(req: Request, res: Response) {
     req.userId = null;
 
-    return res.status(200).json({ message: "Logout" });
+    return res.sendStatus(200);
   }
 }

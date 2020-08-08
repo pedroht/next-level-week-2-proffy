@@ -12,7 +12,7 @@ export default class ConnectionController {
         total,
       });
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
   }
 
@@ -24,7 +24,7 @@ export default class ConnectionController {
 
       return res.sendStatus(201);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.json({ error: error.message }).status(400);
     }
   }
 }
