@@ -4,10 +4,46 @@
 
   display: flex;
   justify-content: center;
-  align-items: center;
 
   color: var(--color-text-in-primary);
   background: var(--color-primary);
+}
+
+#page-landing-content.container {
+  max-width: 112rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2.4rem;
+}
+
+.user-actions > div {
+  display: flex;
+  align-items: center;
+}
+
+.user-actions > div img {
+  width: 4rem;
+  border-radius: 50%;
+}
+
+.user-actions > div a {
+  margin-left: 1.6rem;
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 3rem;
+  color: var(--color-text-in-primary);
+}
+
+.banner {
+  padding-top: 6rem;
+  flex: 1;
 }
 
 .logo-container {
@@ -28,6 +64,44 @@
 
 .hero-image {
   width: 100%;
+  max-height: 30rem;
+}
+
+.actions {
+  margin-top: 5.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.welcome p {
+  font-size: 2rem;
+  line-height: 3rem;
+  margin: 0;
+  color: var(--color-text-in-primary);
+}
+
+.welcome p span {
+  display: block;
+  font-weight: 600;
+}
+
+.total-connections {
+  font-size: 1.4rem;
+  text-align: right;
+  max-width: 16rem;
+}
+
+.total-connections img {
+  display: inline-block;
+  margin-top: 0.4rem;
+  margin-left: 0.4rem;
 }
 
 .buttons-container {
@@ -80,33 +154,14 @@
   margin-right: 2.4rem;
 }
 
-.total-connections {
-  font-size: 1.4rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.total-connections img {
-  margin-left: 0.8rem;
-}
-
 @media (min-width: 1100px) {
-  #page-landing-content {
-    max-width: 1100px;
-
+  .banner {
     display: grid;
-    grid-template-rows: 350px 1fr;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-areas:
-      "logo hero hero"
-      "buttons buttons total";
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
   }
 
   .logo-container {
-    grid-area: logo;
-    align-self: center;
     text-align: left;
     margin: 0;
   }
@@ -120,14 +175,21 @@
     font-size: 3.6rem;
   }
 
-  .hero-image {
-    grid-area: hero;
-    justify-self: end;
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas: "welcome welcome buttons buttons buttons";
+    margin-bottom: 16rem;
+    column-gap: 2rem;
+  }
+
+  .welcome {
+    grid-area: welcome;
   }
 
   .buttons-container {
     grid-area: buttons;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .buttons-container a {

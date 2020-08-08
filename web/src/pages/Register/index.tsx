@@ -6,6 +6,7 @@ import api from "../../services/api";
 import FormLayout from "../../components/FormLayout";
 
 import "./styles.css";
+import { Z_STREAM_ERROR } from "zlib";
 
 function Register() {
   const history = useHistory();
@@ -14,6 +15,7 @@ function Register() {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleRegister(e: FormEvent) {
     e.preventDefault();
@@ -26,12 +28,14 @@ function Register() {
     });
 
     if (response.data === "Created") {
-      history.push("/");
+      history.push("/status", { success: true, page: "register" });
+    } else {
+      setError(response.data.error);
     }
   }
 
   return (
-    <FormLayout>
+    <FormLayout error={error}>
       <form onSubmit={handleRegister}>
         <h1>Cadastro</h1>
         <p>Preencha os dados abaixo para começar.</p>

@@ -8,16 +8,18 @@ import TeacherList from "./pages/TeacherList";
 import TeacherForm from "./pages/TeacherForm";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
+import SubmitStatus from "./pages/SubmitStatus";
 
 function Routes() {
   return (
     <BrowserRouter>
       <Route path="/" exact component={Login} />
-      <Route path="/register" exact component={Register} />
-      <Route path="/landing" exact component={Landing} />
-      <Route path="/study" exact component={TeacherList} />
-      <Route path="/give-classes" exact component={TeacherForm} />
-      <Route path="/forgot-password" exact component={ForgotPassword} />
+      <Route path="/register" component={Register} />
+      <Route path="/landing" component={Landing} />
+      <Route path="/study" component={TeacherList} />
+      <Route path="/give-classes" component={TeacherForm} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/status" component={SubmitStatus} />
     </BrowserRouter>
   );
 }

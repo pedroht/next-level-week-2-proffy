@@ -10,9 +10,10 @@ import "./styles.css";
 interface LayoutProps {
   login?: boolean;
   children: ReactNode;
+  error?: string | undefined;
 }
 
-const FormLayout: React.FC<LayoutProps> = ({ login, children }) => {
+const FormLayout: React.FC<LayoutProps> = ({ login, error, children }) => {
   return (
     <div id="page-form">
       <div
@@ -33,6 +34,8 @@ const FormLayout: React.FC<LayoutProps> = ({ login, children }) => {
             <img src={backIcon} alt="Voltar" />
           </Link>
         )}
+
+        {error && <div className="error">{error}</div>}
 
         {children}
       </div>

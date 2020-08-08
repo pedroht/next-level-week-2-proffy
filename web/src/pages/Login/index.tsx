@@ -9,9 +9,15 @@ import purpleHeartImg from "../../assets/images/icons/purple-heart.svg";
 
 import "./styles.css";
 
+interface LoginResponse {
+  error?: string | undefined;
+  token?: string;
+}
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | undefined>();
 
   const history = useHistory();
 
@@ -28,15 +34,23 @@ function Login() {
 
     const response = await api.post("login", { email, password });
 
-    const { token } = response.data;
+    const { error, token } = response.data as LoginResponse;
 
-    localStorage.setItem("@Proffy:Token", token);
+    console.log(error, token);
 
-    //history.push("landing");
+    if (token) {
+      localStorage.setItem("@Proffy:Token", token);
+
+      history.push("landing");
+    }
+
+    if (error) {
+      setError(error);
+    }
   }
 
   return (
-    <FormLayout login>
+    <FormLayout login error={error}>
       <form onSubmit={handleLogin}>
         <h1>Fazer login</h1>
 
