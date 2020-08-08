@@ -1,0 +1,12 @@
+.form-container form > h1 {
+  max-width: 27rem;
+}
+
+.form-container form > p {
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.input-block {
+  margin-top: 4rem;
+}

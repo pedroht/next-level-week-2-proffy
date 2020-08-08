@@ -1,0 +1,100 @@
+.input-block {
+  margin-top: 4rem;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.4rem;
+}
+
+.input-group input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+}
+
+.input-group input[type="checkbox"] + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+.input-group input[type="checkbox"] + label:before {
+  content: "";
+  display: inline-block;
+  vertical-align: text-top;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--color-line-in-white);
+  background: var(--color-box-footer);
+  border-radius: 0.8rem;
+  margin-right: 1rem;
+}
+
+.input-group input[type="checkbox"]:hover + label:before {
+  background: var(--color-secundary-dark);
+}
+
+.input-group input[type="checkbox"]:checked + label:before {
+  background: var(--color-secundary);
+}
+
+.input-group input[type="checkbox"]:checked + label:after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  top: 1rem;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white,
+    4px -6px 0 white, 4px -8px 0 white;
+  transform: rotate(45deg);
+}
+
+.form-group .input-group label {
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  color: var(--color-text-complement);
+}
+.form-group a {
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  color: var(--color-text-complement);
+}
+
+.form-group a {
+  margin: 0;
+  text-decoration: none;
+}
+
+.register {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.register p {
+  font-size: 1.6rem;
+  line-height: 2.6rem;
+  color: var(--color-text-base);
+}
+
+.register p a {
+  color: var(--color-primary);
+  font-weight: 600;
+  display: block;
+}
+
+.register p.free {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.register p img {
+  margin-left: 0.8rem;
+}
