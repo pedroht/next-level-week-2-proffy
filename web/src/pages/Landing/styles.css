@@ -41,6 +41,12 @@
   color: var(--color-text-in-primary);
 }
 
+.user-actions button {
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+}
+
 .banner {
   padding-top: 6rem;
   flex: 1;

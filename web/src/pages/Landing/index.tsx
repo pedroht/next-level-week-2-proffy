@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import logoImg from "../../assets/images/logo.svg";
 import landingImg from "../../assets/images/landing.svg";
 import studyIcon from "../../assets/images/icons/study.svg";
 import giveClassesIcon from "../../assets/images/icons/give-classes.svg";
 import purpleHeartIcon from "../../assets/images/icons/purple-heart.svg";
-import warningIcon from "../../assets/images/icons/warning.svg";
+import logoutIcon from "../../assets/images/icons/logout.svg";
 
 import api from "../../services/api";
 
@@ -14,6 +14,12 @@ import "./styles.css";
 
 function Landing() {
   const [totalConnections, setTotalConnections] = useState(0);
+  const history = useHistory();
+
+  function handleLogout() {
+    localStorage.removeItem("@Proffy:Token");
+    history.push("/");
+  }
 
   useEffect(() => {
     async function getTotalConnections() {
@@ -36,9 +42,9 @@ function Landing() {
             />
             <Link to="/user">Pedro Henrique</Link>
           </div>
-          <Link to="/logout">
-            <img src={warningIcon} alt="Logout" />
-          </Link>
+          <button onClick={handleLogout}>
+            <img src={logoutIcon} alt="Logout" />
+          </button>
         </div>
 
         <div className="banner">
