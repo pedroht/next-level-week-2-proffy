@@ -9,6 +9,7 @@ import TeacherForm from "./pages/TeacherForm";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import SubmitStatus from "./pages/SubmitStatus";
+import User from "./pages/User";
 
 function Routes() {
   return (
@@ -20,6 +21,7 @@ function Routes() {
       <Route path="/give-classes" component={TeacherForm} />
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/status" component={SubmitStatus} />
+      <Route path="/user" component={User} />
     </BrowserRouter>
   );
 }
