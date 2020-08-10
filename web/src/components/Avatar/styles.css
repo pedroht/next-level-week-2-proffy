@@ -1,0 +1,24 @@
+.avatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar img {
+  border-radius: 50%;
+}
+
+.avatar a {
+  margin-left: 1.6rem;
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 3rem;
+  color: var(--color-text-in-primary);
+}
+
+.avatar strong {
+  font-family: Archivo;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  color: var(--color-text-title);
+}

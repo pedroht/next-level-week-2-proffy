@@ -11,6 +11,7 @@ import logoutIcon from "../../assets/images/icons/logout.svg";
 import api from "../../services/api";
 
 import "./styles.css";
+import Avatar from "../../components/Avatar";
 
 function Landing() {
   const [totalConnections, setTotalConnections] = useState(0);
@@ -35,13 +36,12 @@ function Landing() {
     <div id="page-landing">
       <div id="page-landing-content" className="container">
         <div className="user-actions">
-          <div>
-            <img
-              src="https://avatars2.githubusercontent.com/u/2254731?v=4"
-              alt="Pedro Henrique"
-            />
-            <Link to="/user">Pedro Henrique</Link>
-          </div>
+          <Avatar
+            name="Pedro"
+            lastname="Henrique"
+            image="https://avatars2.githubusercontent.com/u/2254731?v=4"
+            home
+          />
           <button onClick={handleLogout}>
             <img src={logoutIcon} alt="Logout" />
           </button>

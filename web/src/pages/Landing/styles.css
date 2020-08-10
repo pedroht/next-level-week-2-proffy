@@ -23,22 +23,9 @@
   padding-top: 2.4rem;
 }
 
-.user-actions > div {
-  display: flex;
-  align-items: center;
-}
-
-.user-actions > div img {
+.user-actions > .avatar img {
   width: 4rem;
-  border-radius: 50%;
-}
-
-.user-actions > div a {
-  margin-left: 1.6rem;
-  text-decoration: none;
-  font-size: 1.4rem;
-  line-height: 3rem;
-  color: var(--color-text-in-primary);
+  height: 4rem;
 }
 
 .user-actions button {
