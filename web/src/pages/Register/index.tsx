@@ -4,9 +4,9 @@ import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 
 import FormLayout from "../../components/FormLayout";
+import Input from "../../components/Input";
 
 import "./styles.css";
-import { Z_STREAM_ERROR } from "zlib";
 
 function Register() {
   const history = useHistory();
@@ -40,42 +40,35 @@ function Register() {
         <h1>Cadastro</h1>
         <p>Preencha os dados abaixo para começar.</p>
 
-        <div className="input-block">
-          <input
-            type="text"
-            name="name"
-            placeholder="Nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="input-block">
-          <input
-            type="text"
-            name="lastname"
-            placeholder="Sobrenome"
-            value={lastname}
-            onChange={(e) => setLastname(e.target.value)}
-          />
-        </div>
-        <div className="input-block">
-          <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="input-block">
-          <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <Input
+          name="name"
+          label="Nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <Input
+          name="lastname"
+          label="Sobrenome"
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
+        />
+
+        <Input
+          type="email"
+          name="email"
+          label="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          type="password"
+          name="password"
+          label="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
         <button type="submit">Concluir cadastro</button>
       </form>

@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 
 import FormLayout from "../../components/FormLayout";
+import Input from "../../components/Input";
 
 import "./styles.css";
 
@@ -22,15 +23,13 @@ function ForgotPassword() {
         <h1>Eita, esqueceu sua senha?</h1>
         <p>Não esquenta, vamos dar um jeito nisso</p>
 
-        <div className="input-block">
-          <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <Input
+          type="email"
+          name="email"
+          label="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <button type="submit" disabled={email === "" ? true : false}>
           Enviar
