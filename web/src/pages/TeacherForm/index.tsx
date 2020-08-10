@@ -5,6 +5,7 @@ import PageHeader from "../../components/PageHeader";
 import Input from "../../components/Input";
 import Textarea from "../../components/Textarea";
 import Select from "../../components/Select";
+import Avatar from "../../components/Avatar";
 
 import warningIcon from "../../assets/images/icons/warning.svg";
 
@@ -79,6 +80,7 @@ function TeacherForm() {
   return (
     <div id="page-teacher-form" className="container">
       <PageHeader
+        page="Dar Aulas"
         title="Que incrível que você quer dar aulas."
         description="O primeiro é preencher esse formulário de inscrição"
       />
@@ -88,27 +90,27 @@ function TeacherForm() {
           <fieldset>
             <legend>Seus dados</legend>
 
-            <Input
-              label="Nome completo"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Input
-              label="Avatar"
-              name="avatar"
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
-            />
-            <Input
-              label="WhatsApp"
-              name="whatsapp"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-            />
+            <div className="form-group">
+              <Avatar
+                image="https://github.com/diego3g.png"
+                name="Pedro"
+                lastname="Henrique"
+              />
+
+              <Input
+                label="WhatsApp"
+                name="whatsapp"
+                value={whatsapp}
+                placeholder="(   )   _   ____-____"
+                onChange={(e) => setWhatsapp(e.target.value)}
+              />
+            </div>
+
             <Textarea
               label="Biografia"
+              labelOptions="(Máximo 300 caracteres)"
               name="bio"
+              maxLength={300}
               value={bio}
               onChange={(e) => setBio(e.target.value)}
             />
@@ -117,29 +119,32 @@ function TeacherForm() {
           <fieldset>
             <legend>Sobre a aula</legend>
 
-            <Select
-              label="Matéria"
-              name="subject"
-              options={[
-                { value: "Artes", label: "Artes" },
-                { value: "Química", label: "Química" },
-                { value: "Matemática", label: "Matemática" },
-                { value: "Português", label: "Português" },
-                { value: "Biologia", label: "Biologia" },
-                { value: "Ciências", label: "Ciências" },
-                { value: "Geografia", label: "Geografia" },
-                { value: "História", label: "História" },
-                { value: "Educação Física", label: "Educação Física" },
-              ]}
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-            <Input
-              label="Custo da sua hora por aula"
-              name="cost"
-              value={cost}
-              onChange={(e) => setCost(e.target.value)}
-            />
+            <div className="form-group">
+              <Select
+                label="Matéria"
+                name="subject"
+                options={[
+                  { value: "Artes", label: "Artes" },
+                  { value: "Química", label: "Química" },
+                  { value: "Matemática", label: "Matemática" },
+                  { value: "Português", label: "Português" },
+                  { value: "Biologia", label: "Biologia" },
+                  { value: "Ciências", label: "Ciências" },
+                  { value: "Geografia", label: "Geografia" },
+                  { value: "História", label: "História" },
+                  { value: "Educação Física", label: "Educação Física" },
+                ]}
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+              <Input
+                label="Custo da sua hora por aula"
+                name="cost"
+                placeholder="R$"
+                value={cost}
+                onChange={(e) => setCost(e.target.value)}
+              />
+            </div>
           </fieldset>
 
           <fieldset>
