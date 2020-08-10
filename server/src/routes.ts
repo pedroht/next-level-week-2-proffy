@@ -16,7 +16,7 @@ const sessionsController = new SessionsController();
 /* Rotes de Criação e Listagem de 1 Usuário */
 routes.get("/users", isAuthenticated, usersController.show);
 routes.post("/users", usersController.create);
-routes.put("/users/:id", isAuthenticated, usersController.update);
+routes.put("/users", isAuthenticated, usersController.update);
 
 /* Rotas de Criação e Listagem das Aulas */
 routes.get("/classes", isAuthenticated, classesController.index);

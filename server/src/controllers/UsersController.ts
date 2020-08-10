@@ -1,7 +1,16 @@
 import { Request, Response, response } from "express";
 import bcrypt from "bcrypt";
 
+import ClassesController from "./ClassesController";
+
 import db from "../database/connection";
+import convertHourToMinutes from "../utils/convertHourToMinutes";
+
+interface ScheduleItem {
+  week_day: number;
+  from: string;
+  to: string;
+}
 
 export default class UsersController {
   async show(req: Request, res: Response) {
@@ -49,31 +58,36 @@ export default class UsersController {
   }
 
   async update(req: Request, res: Response) {
-    const { email } = req.body;
-    const { id } = req.params;
+    const { email, cost, schedule, subject } = req.body;
 
-    const user_id = req.userId;
+    delete req.body.subject;
+    delete req.body.cost;
+    delete req.body.schedule;
+
+    const user_id = req.userId as number;
 
     try {
-      if (user_id === Number(id)) {
-        let user = await db("users").where("id", id);
+      let user = await db("users").where("id", user_id);
 
-        if (email !== typeof undefined && email !== user[0].email) {
-          user = await db("users").where("email", email);
+      if (email !== typeof undefined && email !== user[0].email) {
+        user = await db("users").where("email", email);
 
-          if (user[0]) {
-            return res
-              .json({ error: "Este email já está em uso " })
-              .status(400);
-          }
+        if (user[0]) {
+          return res.json({ error: "Este email já está em uso " }).status(400);
         }
-
-        await db("users").update(req.body).where("id", id);
-
-        return res.sendStatus(200);
       }
 
-      return res.json({ error: "Usuário Não autorizado" }).status(400);
+      await db("users").update(req.body).where("id", user_id);
+
+      const classController = new ClassesController();
+
+      req.body.subject = subject;
+      req.body.cost = cost;
+      req.body.schedule = schedule;
+
+      classController.create(req, res);
+
+      return res.sendStatus(201);
     } catch (error) {
       return res.json({ error: error.message }).status(400);
     }

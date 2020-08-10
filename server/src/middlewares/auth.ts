@@ -11,7 +11,7 @@ export async function isAuthenticated(
   next: NextFunction
 ) {
   if (!req.headers.authorization) {
-    return res.status(400).json({ error: "Nenhum token providenciado!" });
+    return res.json({ error: "Nenhum token providenciado!" }).status(400);
   }
 
   const token = req.headers.authorization.split(" ")[1];
@@ -23,6 +23,6 @@ export async function isAuthenticated(
 
     return next();
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res.json({ error: error.message }).status(400);
   }
 }
