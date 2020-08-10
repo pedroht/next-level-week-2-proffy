@@ -91,4 +91,21 @@ export default class ClassesController {
 
     return res.json();
   }
+
+  async getSubjects(req: Request, res: Response) {
+    try {
+      const subjects = await db("subjects").select("*");
+
+      const serializedSubjects = subjects.map((subject) => {
+        return {
+          value: subject.id,
+          label: subject.name,
+        };
+      });
+
+      return res.json(serializedSubjects).status(200);
+    } catch (error) {
+      return res.json({ error: error.message }).status(400);
+    }
+  }
 }

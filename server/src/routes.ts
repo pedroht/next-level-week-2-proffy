@@ -26,6 +26,9 @@ routes.post("/classes", isAuthenticated, classesController.create);
 routes.get("/connections", connectionsController.index);
 routes.post("/connections", isAuthenticated, connectionsController.create);
 
+/* Rota para listar subjects */
+routes.get("/subjects", classesController.getSubjects);
+
 /* Rotas de Login e Logout */
 routes.post("/login", sessionsController.login);
 routes.get("/logout", sessionsController.logout);
