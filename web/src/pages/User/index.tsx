@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import PageHeader from "../../components/PageHeader";
@@ -11,7 +11,26 @@ import warningIcon from "../../assets/images/icons/warning.svg";
 
 import api from "../../services/api";
 
+import convertMinutesToHourString from "../../utils/convertMinutesToHourString";
+
 import "./styles.css";
+import { userInfo } from "os";
+
+interface User {
+  name: string;
+  lastname: string;
+  email: string;
+  whatsapp: string;
+  bio: string;
+  avatar: string;
+}
+
+interface ScheduleItem {
+  id: null | number;
+  week_day: number;
+  from: string;
+  to: string;
+}
 
 function User() {
   const history = useHistory();
@@ -24,15 +43,77 @@ function User() {
   const [bio, setBio] = useState("");
   const [subject, setSubject] = useState("");
   const [cost, setCost] = useState("");
+  const [token, setToken] = useState<null | string>();
 
-  const [scheduleItems, setScheduleItems] = useState([
-    { week_day: 0, from: "", to: "" },
-  ]);
+  const [options, setOptions] = useState([]);
+
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@Proffy:Token");
+
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  useEffect(() => {
+    async function loadSubjects() {
+      const response = await api.get("subjects");
+
+      setOptions(response.data);
+    }
+
+    loadSubjects();
+  }, []);
+
+  useEffect(() => {
+    async function loadUser() {
+      const response = await api.get("users", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.data) {
+        console.log(response.data.error);
+      }
+
+      const { user, classes } = response.data;
+
+      if (user) {
+        setName(user.name);
+        setLastname(user.lastname);
+        setAvatar(user.avatar);
+        setEmail(user.email);
+        setWhatsapp(user.whatsapp);
+        setBio(user.bio);
+      }
+
+      if (classes) {
+        setSubject(classes[0].subject_id);
+        setCost(classes[0].cost);
+        const filteredClasses = classes.map(
+          ({ id, week_day, from, to }: ScheduleItem) => ({
+            id,
+            week_day,
+            from: convertMinutesToHourString(Number(from)),
+            to: convertMinutesToHourString(Number(to)),
+          })
+        );
+
+        setScheduleItems(filteredClasses);
+      }
+    }
+
+    loadUser();
+  }, [token]);
 
   function addNewScheduleItem() {
     setScheduleItems([
       ...scheduleItems,
       {
+        id: null,
         week_day: 0,
         from: "",
         to: "",
@@ -40,27 +121,30 @@ function User() {
     ]);
   }
 
-  function handleCreateClass(e: FormEvent) {
+  async function handleUpdateUser(e: FormEvent) {
     e.preventDefault();
 
-    api
-      .post("classes", {
+    const response = await api.put(
+      "users",
+      {
         name,
+        lastname,
+        email,
         avatar,
         whatsapp,
         bio,
         subject,
         cost: Number(cost),
         schedule: scheduleItems,
-      })
-      .then(() => {
-        alert("Cadastro realizado com sucesso!");
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-        history.push("/");
-      })
-      .catch(() => {
-        alert("Erro no cadastro");
-      });
+    console.log(response.data);
   }
 
   function setScheduleItemValue(
@@ -83,15 +167,15 @@ function User() {
     <div id="page-user-form" className="container">
       <PageHeader page="Dar aulas" title="Pedro Henrique">
         <Avatar
-          image="https://github.com/diego3g.png"
-          name="Pedro"
-          lastname="Henrique"
+          image={avatar ? avatar : "https://github.com/diego3g.png"}
+          name={name}
+          lastname={lastname}
         />
         <p>Geografia</p>
       </PageHeader>
 
       <main>
-        <form onSubmit={handleCreateClass}>
+        <form onSubmit={handleUpdateUser}>
           <fieldset>
             <legend>Seus dados</legend>
 
@@ -145,17 +229,7 @@ function User() {
               <Select
                 label="Matéria"
                 name="subject"
-                options={[
-                  { value: "Artes", label: "Artes" },
-                  { value: "Química", label: "Química" },
-                  { value: "Matemática", label: "Matemática" },
-                  { value: "Português", label: "Português" },
-                  { value: "Biologia", label: "Biologia" },
-                  { value: "Ciências", label: "Ciências" },
-                  { value: "Geografia", label: "Geografia" },
-                  { value: "História", label: "História" },
-                  { value: "Educação Física", label: "Educação Física" },
-                ]}
+                options={options}
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
               />
@@ -178,7 +252,7 @@ function User() {
             </legend>
 
             {scheduleItems.map((scheduleItem, index) => (
-              <div className="schedule-item" key={index}>
+              <div className="schedule-item" key={String(scheduleItem.id)}>
                 <Select
                   label="Dia da semana"
                   name="week_day"

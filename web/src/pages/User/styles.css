@@ -155,9 +155,9 @@ fieldset .form-group + .textarea-block {
     max-width: 100vw;
   }
 
-  /*#page-user-form .page-header {
+  #page-user-form .page-header {
     height: unset;
-  }*/
+  }
 
   #page-user-form .page-header .header-content {
     margin-bottom: 0;

@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { useHistory } from "react-router-dom";
 
 import PageHeader from "../../components/PageHeader";
@@ -16,16 +16,35 @@ import "./styles.css";
 function TeacherForm() {
   const history = useHistory();
 
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [bio, setBio] = useState("");
   const [subject, setSubject] = useState("");
   const [cost, setCost] = useState("");
 
+  const [token, setToken] = useState<null | string>();
+  const [options, setOptions] = useState([]);
+
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: "", to: "" },
   ]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@Proffy:Token");
+
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  useEffect(() => {
+    async function loadSubjects() {
+      const response = await api.get("subjects");
+
+      setOptions(response.data);
+    }
+
+    loadSubjects();
+  }, []);
 
   function addNewScheduleItem() {
     setScheduleItems([
@@ -38,27 +57,32 @@ function TeacherForm() {
     ]);
   }
 
-  function handleCreateClass(e: FormEvent) {
+  async function handleCreateClass(e: FormEvent) {
     e.preventDefault();
 
-    api
-      .post("classes", {
-        name,
-        avatar,
+    const response = await api.put(
+      "users",
+      {
         whatsapp,
         bio,
         subject,
         cost: Number(cost),
         schedule: scheduleItems,
-      })
-      .then(() => {
-        alert("Cadastro realizado com sucesso!");
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-        history.push("/");
-      })
-      .catch(() => {
-        alert("Erro no cadastro");
-      });
+    if (response.data === "Created") {
+      alert("Cadastro realizado com sucesso!");
+
+      history.push("/");
+    } else {
+      alert("Erro no cadastro. Erro: " + response.data.error);
+    }
   }
 
   function setScheduleItemValue(
